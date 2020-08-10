@@ -17,5 +17,5 @@ node_modules/.bin/Icon
 
 .idea/
 
-bootcamp-final-project-web-server/services/__pycache__/
+services/__pycache__/
 /node_modules/
