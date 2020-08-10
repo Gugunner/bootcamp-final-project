@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import BootcampFinalProjectContextProvider from "./Shared/app-context";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+      <BootcampFinalProjectContextProvider>
+         <App />
+      </BootcampFinalProjectContextProvider>
+</React.StrictMode>,
   document.getElementById('root')
 );
 

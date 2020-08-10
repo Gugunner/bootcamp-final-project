@@ -1,13 +1,11 @@
 // @flow
-import React, {useEffect, useState} from "react";
-import { Map, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet';
+import React, {useContext, useEffect, useState} from "react";
+import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import * as d3 from "d3";
-import world from "./custom_world.geo.json";
-const acessToken = "pk.eyJ1IjoiZ3VndW5uZXIiLCJhIjoiY2tjbWxoamwzMDJmajJ4cWtsNHN6NjJkNiJ9.gTU76mp1kS4Rn7Kh5h67EQ";
-const MAPBOX_API_URL = `https://api.mapbox.com/styles/v1/gugunner/ckdnjzx3i2ca61jmvld4f035x/tiles/256/{z}/{x}/{y}@2x?access_token=${acessToken}`
-
+import { BootcampAppContext } from "../../Shared/app-context";
+// import * as d3 from "d3";
+import { MAPBOX_API_URL } from "../../Shared/app-constants";
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -27,11 +25,16 @@ const MapStateHandler = () => {
 
 const BootcampFinalProjectMap = () => {
     const { state } = MapStateHandler();
+    const { startupDir, world, addStartupInfoToCountry } = useContext(BootcampAppContext);
     console.log(state);
     useEffect(() => {
-        console.log(world);
-        // d3.json(geoJSONPath).then(data => console.log(data));
-    },[])
+        console.log("LATAM GEOJSON",world);
+    },[world]);
+
+    useEffect(() => {
+        console.log("Startup Dir", startupDir);
+    },[startupDir]);
+
     const position = [state.lat, state.lng];
     return (
         <Map center={position} zoom={state.zoom} class="project-map">
@@ -39,12 +42,11 @@ const BootcampFinalProjectMap = () => {
                 attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
                 url={MAPBOX_API_URL}
             />
-            {/*<Marker position={position}>*/}
-            {/*    <Popup>*/}
-            {/*        A pretty CSS3 popup. <br /> Easily customizable.*/}
-            {/*    </Popup>*/}
-            {/*</Marker>*/}
-            <GeoJSON data={world}/>
+            {
+                startupDir.startups ?
+                <GeoJSON data={world} onEachFeature={addStartupInfoToCountry}/> : ""
+            }
+
         </Map>
     )
 };
