@@ -19,3 +19,9 @@ node_modules/.bin/Icon
 
 services/__pycache__/
 /node_modules/
+
+__pycache__/
+
+bootcamp-final-project-web-app/src/Data/Icon
+
+bootcamp-final-project-web-app/src/Data/Icon
