@@ -16,9 +16,9 @@ L.Icon.Default.mergeOptions({
 
 const MapStateHandler = () => {
     const [state, setState] = useState(() => ({
-        lat: 9.1900,
-        lng: -75.0152,
-        zoom: 2
+        lat: -15.2307,
+        lng: -61.5887,
+        zoom: 3
     }));
     return { state, setState};
 };
@@ -26,15 +26,6 @@ const MapStateHandler = () => {
 const BootcampFinalProjectMap = () => {
     const { state } = MapStateHandler();
     const { startupDir, world, addStartupInfoToCountry } = useContext(BootcampAppContext);
-    console.log(state);
-    useEffect(() => {
-        console.log("LATAM GEOJSON",world);
-    },[world]);
-
-    useEffect(() => {
-        console.log("Startup Dir", startupDir);
-    },[startupDir]);
-
     const position = [state.lat, state.lng];
     return (
         <Map center={position} zoom={state.zoom} class="project-map">
