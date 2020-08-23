@@ -24,8 +24,6 @@ def index(path):
 @cross_origin()
 def get_all_startups():
     startup_dirs = collection_startup_dir.find()
-    # startup_dir_services.get_all_startups(startup_dirs)
-    # return "Got it!"
     return jsonify(startup_dir_services.get_all_startups(startup_dirs))
 
 if __name__ == "__main__":

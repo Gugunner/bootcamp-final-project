@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import './App.css';
 import BootcampFinalProjectMap from "./Components/Map/map";
 import BootcampFinalProjectStartupTypePieChart from "./Components/PieChart/pie";
+import BootCampFinalProjectStartupBarChart from "./Components/BarChart/bar";
 import {BootcampAppContext} from "./Shared/app-context";
 import Grid from "@material-ui/core/Grid";
 
@@ -25,7 +26,7 @@ function App() {
                     <BootcampFinalProjectStartupTypePieChart />
                 </Grid>
                 <Grid item xs={12} style={{height: "50%"}}>
-                    <div>VCs by country</div>
+                    <BootCampFinalProjectStartupBarChart />
                 </Grid>
             </Grid>
         </Grid>

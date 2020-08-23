@@ -17,9 +17,7 @@ const BootcampFinalProjectStartupTypePieChart = () => {
   useEffect(() => {
     if(startupDir.startups) {
       const { startups } = startupDir;
-      console.log(startups);
       const startupSectors =  startups.map(stp => stp.sector);
-      console.log(startupSectors);
       const startupSectorsCount = startupSectors.reduce((acc,currentVal,idx) => {
         if(typeof acc !== "string" && Array.isArray(acc)) {
           const foundIndex = acc.findIndex(obj => {
@@ -46,7 +44,6 @@ const BootcampFinalProjectStartupTypePieChart = () => {
   const formatPercent = d3.format(".2%");
 
   useEffect(() => {
-    console.log("Hello!")
     if(d3.select("#svgCanvas")) {
       d3.select("#svgCanvas").remove();
     }
@@ -74,11 +71,9 @@ const BootcampFinalProjectStartupTypePieChart = () => {
 
 //dataset equal to pieArcData
       const pieArcData = d3.pie().value(d => d.count)(data);
-      console.log("pieArcData", pieArcData);
       const svgHeight = pieRef.current.clientHeight*2.1;
       const svgWidth = pieRef.current.clientWidth*2.4;
       const total = data.reduce((acc,val,idx) => idx === 1 ? acc.count+val.count : acc+val.count);
-      console.log("Total",total);
       const margin = {
         top: 50,
         bottom: 30,
@@ -135,7 +130,7 @@ const BootcampFinalProjectStartupTypePieChart = () => {
             text
                 .append("tspan")
                 .attr("font-size", "24")
-                .text(data.data.name);
+                .text(data.value.toLocaleString("en") > 1 ? data.data.name : "");
 
             text
                 .append("tspan")
@@ -143,7 +138,7 @@ const BootcampFinalProjectStartupTypePieChart = () => {
                 .attr("font-size", "20")
                 .attr("font-weight",700)
                 .attr("dy", "1.3em")
-                .text(`${data.value.toLocaleString("en")} (${formatPercent(data.data.count/total)})`);
+                .text(data.value.toLocaleString("en") > 1 ? `${data.value.toLocaleString("en")} (${formatPercent(data.data.count/total)})` : "");
           });
     }
   },[data])
