@@ -21,104 +21,11 @@ export const getAllVcsByCountry = (startups) => {
             ...acc,
             [valHQ]: acc[valHQ] ? [...acc[valHQ] , ...countriesValVCs].filter(onlyUnique) : countriesValVCs
         };
-
-
-    //     if (idx === 1) {
-    //         const accHQ = acc.hq.trim();
-    //         const countriesAccVCs = acc.investors.split(",").map(inv => inv.trim());
-    //         const countriesValVCs = val.investors.split(",").map(inv => inv.trim());
-    //         let vcs = {};
-    //         countriesAccVCs.forEach(cVC => {
-    //             if (vcs[cVC]) {
-    //                 vcs = {
-    //                     ...vcs,
-    //                     [cVC]: {
-    //                         ...vcs[cVC],
-    //                         [accHQ]: vcs[cVC][accHQ] ? vcs[cVC][accHQ] + 1 : 1
-    //                     }
-    //                 }
-    //             } else {
-    //                 vcs = {
-    //                     ...vcs,
-    //                     [cVC]: {
-    //                         [accHQ]: 1
-    //                     }
-    //                 }
-    //             }
-    //         });
-    //         countriesValVCs.forEach(cVC => {
-    //             if (vcs[cVC]) {
-    //                 vcs = {
-    //                     ...vcs,
-    //                     [cVC]: {
-    //                         ...vcs[cVC],
-    //                         [valHQ]: vcs[cVC][valHQ] ? vcs[cVC][valHQ] + 1 : 1
-    //                     }
-    //                 }
-    //             } else {
-    //                 vcs = {
-    //                     ...vcs,
-    //                     [cVC]: {
-    //                         [valHQ]: 1
-    //                     }
-    //                 }
-    //             }
-    //         });
-    //         return vcs;
-    //     }
-    //     const countriesValVCs = val.investors.split(",").map(inv => inv.trim());
-    //     let vcs = {};
-    //     countriesValVCs.forEach((cVC,idx) => {
-    //         if(idx === 0) {
-    //             if(acc[cVC]) {
-    //                 vcs = {
-    //                     ...acc,
-    //                     [cVC]: {
-    //                         ...acc[cVC],
-    //                         [valHQ]: acc[cVC][valHQ] ? acc[cVC][valHQ] + 1 : 1
-    //                     }
-    //                 }
-    //             } else {
-    //                 vcs = {
-    //                     ...acc,
-    //                     [cVC]: {
-    //                         [valHQ]: 1
-    //                     }
-    //                 }
-    //             }
-    //         } else {
-    //             if (vcs[cVC]) {
-    //                 vcs = {
-    //                     ...vcs,
-    //                     [cVC]: {
-    //                         ...vcs[cVC],
-    //                         [valHQ]: vcs[cVC][valHQ] ? vcs[cVC][valHQ] + 1 : 1
-    //                     }
-    //                 }
-    //             } else {
-    //                 vcs = {
-    //                     ...vcs,
-    //                     [cVC]: {
-    //                         [valHQ]: 1
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     });
-    //     return vcs;
     });
 
     const vcsByCountryKeys = Object.keys(vcsByCountry);
     let vcsByCountryForTreemap = vcsByCountryKeys.map(key => {
         const countryKeys = Object.keys(vcsByCountry[key]);
-        // if(countryKeys.length > 0) {
-        //     return countryKeys.map(cKey => ({
-        //         name: cKey,
-        //         parent: key,
-        //         value: vcsByCountry[key][cKey]
-        //     }));
-        // };
-        // const cKey = countryKeys[0];
         return {
             name: key,
             parent: "Origin",

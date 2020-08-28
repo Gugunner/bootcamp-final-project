@@ -71,8 +71,8 @@ const BootcampFinalProjectStartupTypePieChart = () => {
 
 //dataset equal to pieArcData
       const pieArcData = d3.pie().value(d => d.count)(data);
-      const svgHeight = pieRef.current.clientHeight*2.1;
-      const svgWidth = pieRef.current.clientWidth*2.4;
+      const svgHeight = 800;
+      const svgWidth = pieRef.current.clientWidth*1.8;
       const total = data.reduce((acc,val,idx) => idx === 1 ? acc.count+val.count : acc+val.count);
       const margin = {
         top: 50,
