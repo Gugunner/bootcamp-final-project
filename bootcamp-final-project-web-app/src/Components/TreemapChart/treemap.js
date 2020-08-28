@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import * as d3 from "d3";
 import d3Tip from "d3-tip";
-import {BootcampAppContext} from "../../Shared/app-context";
+import {BootcampAppContext} from "../../Shared/AppSession/app-context";
 import {getAllVcsByCountry} from "./treemap-utils";
 
 const BootCampFinalProjectStartupTreemapChart = () => {
@@ -27,7 +27,7 @@ const BootCampFinalProjectStartupTreemapChart = () => {
         }
         if(isMounted && Object.keys(data).length > 0) {
             // console.log("Data",data);
-            const svgHeight = treemapChart.current.clientHeight;
+            const svgHeight = treemapChart.current.clientHeight*1.2;
             const svgWidth = treemapChart.current.clientWidth;
             const margin = {
                 top: 10,
@@ -59,8 +59,6 @@ const BootCampFinalProjectStartupTreemapChart = () => {
                 console.log("Dataset",data);
                 const root = d3.stratify()
                     .id((d, idx) => {
-                        // console.log("Idx",idx);
-                        // console.log("D",d);
                         return d.name
                     })
                     .parentId((d) => d.parent)

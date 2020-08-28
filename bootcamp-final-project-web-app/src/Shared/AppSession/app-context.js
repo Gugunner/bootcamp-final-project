@@ -1,6 +1,6 @@
 import React, {createContext, useState} from "react";
-import world from "../Data/custom_world.geo.json";
-import { getAllStartups } from "../Utils/services";
+import world from "../../Data/custom_world.geo.json";
+import { getAllStartups } from "../../Utils/services";
 
 export const BootcampAppContext = createContext(undefined);
 

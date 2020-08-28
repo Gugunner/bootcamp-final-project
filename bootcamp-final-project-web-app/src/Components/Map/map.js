@@ -3,9 +3,9 @@ import React, {useContext, useEffect, useState} from "react";
 import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { BootcampAppContext } from "../../Shared/app-context";
+import { BootcampAppContext } from "../../Shared/AppSession/app-context";
 // import * as d3 from "d3";
-import { MAPBOX_API_URL } from "../../Shared/app-constants";
+import { MAPBOX_API_URL } from "../../Constants/app-constants";
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -18,7 +18,9 @@ const MapStateHandler = () => {
     const [state, setState] = useState(() => ({
         lat: -15.2307,
         lng: -61.5887,
-        zoom: 3
+        zoom: 3,
+        minZoom: 3,
+        maxZoom: 3
     }));
     return { state, setState};
 };
@@ -28,7 +30,7 @@ const BootcampFinalProjectMap = () => {
     const { startupDir, world, addStartupInfoToCountry } = useContext(BootcampAppContext);
     const position = [state.lat, state.lng];
     return (
-        <Map center={position} zoom={state.zoom} class="project-map">
+        <Map center={position} zoom={state.zoom} maxZoom={state.maxZoom} class="project-map">
             <TileLayer
                 attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
                 url={MAPBOX_API_URL}

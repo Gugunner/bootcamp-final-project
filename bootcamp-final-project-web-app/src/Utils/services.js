@@ -1,4 +1,4 @@
-import { API_DEV_URL } from "../Shared/app-constants";
+import { API_DEV_URL } from "../Constants/app-constants";
 import axios from "axios";
 
 export const getAllStartups = () => {

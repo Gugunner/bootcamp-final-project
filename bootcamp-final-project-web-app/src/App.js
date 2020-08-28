@@ -3,7 +3,8 @@ import './App.css';
 import BootcampFinalProjectMap from "./Components/Map/map";
 import BootcampFinalProjectStartupTypePieChart from "./Components/PieChart/pie";
 import BootCampFinalProjectStartupTreemapChart from "./Components/TreemapChart/treemap";
-import {BootcampAppContext} from "./Shared/app-context";
+import BootcampFinalProjectMenuDrawer from "./Shared/Menu/menu";
+import {BootcampAppContext} from "./Shared/AppSession/app-context";
 import Grid from "@material-ui/core/Grid";
 
 function App() {
@@ -16,16 +17,21 @@ function App() {
         }
     },[dataFetched, getStartupDirs, setDataFetched])
   return (
-    <div className="App">
-        <Grid container spacing={0}>
+    <div className="App" style={{backgroundColor: "rgb(36, 36, 36)", height: "100vh"}}>
+        <Grid container spacing={0} style={{height: "100%"}}>
+            <Grid itme xs={12}>
+                <BootcampFinalProjectMenuDrawer />
+            </Grid>
             <Grid item xs={12} md={6}>
+                <div style={{padding: "20px", backgroundColor: "rgb(36, 36, 36)", height: "100%"}}>
                 <BootcampFinalProjectMap />
+                </div>
             </Grid>
             <Grid item xs={12} md={6}>
                 <Grid item xs={12} style={{height: "48%"}}>
                     <BootcampFinalProjectStartupTypePieChart />
                 </Grid>
-                <Grid item xs={12} style={{height: "52%"}}>
+                <Grid item xs={12} style={{height: "52%", marginTop: "40px"}}>
                     <BootCampFinalProjectStartupTreemapChart />
                 </Grid>
             </Grid>

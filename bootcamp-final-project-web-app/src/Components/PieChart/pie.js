@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import * as d3 from "d3";
 import d3Tip from "d3-tip";
-import {BootcampAppContext} from "../../Shared/app-context";
+import {BootcampAppContext} from "../../Shared/AppSession/app-context";
 const BootcampFinalProjectStartupTypePieChart = () => {
   const { startupDir } = useContext(BootcampAppContext);
   const [data, setData] = useState(() => []);
