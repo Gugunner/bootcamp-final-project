@@ -19,7 +19,7 @@ function App() {
   return (
     <div className="App" style={{backgroundColor: "rgb(36, 36, 36)", height: "100vh"}}>
         <Grid container spacing={0} style={{height: "100%"}}>
-            <Grid itme xs={12}>
+            <Grid item xs={12}>
                 <BootcampFinalProjectMenuDrawer />
             </Grid>
             <Grid item xs={12} md={6}>

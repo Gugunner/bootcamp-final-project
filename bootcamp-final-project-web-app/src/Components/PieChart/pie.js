@@ -101,16 +101,42 @@ const BootcampFinalProjectStartupTypePieChart = () => {
           .padAngle(4 / 300)
           .cornerRadius(8);
 
+      const tooltip = d3Tip()
+          .attr("class","tooltip")
+          .style("background-color","rgb(36,36,36)")
+          .style("font-size","12px")
+          .style("font-family","Open Sans")
+          .style("padding","8px")
+          .style("color","white")
+          .style("width","120px")
+          .style("height","80px")
+          .style("text-align","center")
+          .style("border","1px solid rgba(72,137,247,0.6)")
+          .offset([50,50])
+          .html(d => `
+                    <div>
+                        <h4 style="margin: 4px">Sector</h4>
+                        <h5 style="margin: 4px">${d.data.name}</h5>
+                        <p style="font-family: 'Open Sans'; text-align: center ; margin: 8px">${formatPercent(d.data.count/total)}</p>
+                    </div>`);
+
       pie
           .selectAll("path")
           .data(pieArcData)
           .join("path")
+          .classed("startup-path",true)
           .attr("d", (d, idx) => arcPie(d))
           .attr("id", d=>  d.data.name)
-          .attr("fill", "rgba(72,137,247,0.6")
-          .attr("stroke","rgb(72,137,247")
-          .attr("stroke-width","3");
-      d3.selectAll("path")
+          .attr("fill", "rgba(72,137,247,0.6)")
+          .attr("stroke","rgb(72,137,247)")
+          .attr("stroke-width","3")
+          .style("cursor","pointer")
+          .on("mouseover", tooltip.show)
+          .on("mouseout", tooltip.hide);
+
+
+      pie
+          .selectAll("path")
           .data(pieArcData)
           .each(function(d) {
             const data = d;
@@ -122,8 +148,8 @@ const BootcampFinalProjectStartupTypePieChart = () => {
                 .attr("dy", ".50em")
                 .attr("transform", () => {
                   var _d = arcPie.centroid(data);
-                  _d[0] *= 1.5;	//multiply by a constant factor
-                  _d[1] *= 1.5;	//multiply by a constant factor
+                  _d[0] *= 1.5;
+                  _d[1] *= 1.5;
                   return "translate(" + _d + ")";
                 });
 
@@ -138,7 +164,8 @@ const BootcampFinalProjectStartupTypePieChart = () => {
                 .attr("font-size", "20")
                 .attr("font-weight",700)
                 .attr("dy", "1.3em")
-                .text(data.value.toLocaleString("en") > 1 ? `${data.value.toLocaleString("en")} (${formatPercent(data.data.count/total)})` : "");
+                .text(data.value.toLocaleString("en") > 5 ? `${data.value.toLocaleString("en")} (${formatPercent(data.data.count/total)})` : "");
+            pie.call(tooltip);
           });
     }
   },[data])

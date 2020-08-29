@@ -27,9 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ButtonAppBar = ({toggleDrawer}) => {
     const classes = useStyles();
-    console.log("Toggle Drawer",toggleDrawer)
     const handleDrawer = (status) => {
-        console.log("Status",status);
         toggleDrawer(status);
     };
     return (

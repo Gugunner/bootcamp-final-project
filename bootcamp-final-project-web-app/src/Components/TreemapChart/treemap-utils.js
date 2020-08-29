@@ -30,7 +30,7 @@ export const getAllVcsByCountry = (startups) => {
             name: key,
             parent: "Origin",
             value: vcsByCountry[key].length,
-            vcs: vcsByCountry[key].join(", ")
+            vcs: vcsByCountry[key]
         }
     });
     vcsByCountryForTreemap = [{name: "Origin", parent: "", value: "" }, ...vcsByCountryForTreemap];

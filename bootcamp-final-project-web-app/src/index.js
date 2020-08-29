@@ -6,11 +6,11 @@ import * as serviceWorker from './serviceWorker';
 import BootcampFinalProjectContextProvider from "./Shared/AppSession/app-context";
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
       <BootcampFinalProjectContextProvider>
          <App />
-      </BootcampFinalProjectContextProvider>
-</React.StrictMode>,
+      </BootcampFinalProjectContextProvider>,
+// </React.StrictMode>,
   document.getElementById('root')
 );
 
