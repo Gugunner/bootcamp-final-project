@@ -6,6 +6,7 @@ import BootCampFinalProjectStartupTreemapChart from "./Components/TreemapChart/t
 import BootcampFinalProjectMenuDrawer from "./Shared/Menu/menu";
 import {BootcampAppContext} from "./Shared/AppSession/app-context";
 import Grid from "@material-ui/core/Grid";
+import {Typography} from "@material-ui/core";
 
 function App() {
     const { getStartupDirs } = useContext(BootcampAppContext);
@@ -24,6 +25,7 @@ function App() {
             </Grid>
             <Grid item xs={12} md={6}>
                 <div style={{padding: "20px", backgroundColor: "rgb(36, 36, 36)", height: "100%"}}>
+                    <Typography variant="h2" style={{fontFamily: "Open Sans", color: "White", padding: "16px"}}>LatAm Startups panorama</Typography>
                 <BootcampFinalProjectMap />
                 </div>
             </Grid>

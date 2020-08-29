@@ -31,8 +31,8 @@ const BootCampFinalProjectStartupTreemapChart = () => {
             const svgHeight = treemapChart.current.clientHeight;
             const svgWidth = treemapChart.current.clientWidth;
             const margin = {
-                top: 10,
-                bottom: 10,
+                top: 50,
+                bottom: 50,
                 left: 20,
                 right: 20
             };
@@ -41,6 +41,15 @@ const BootCampFinalProjectStartupTreemapChart = () => {
                 .append("svg")
                 .attr("id","svgCanvas2")
                 .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`);
+
+            const title = svg
+                .append("text")
+                .text("VCs count investment by startup country HQ")
+                .attr("transform", 'translate(50,30)')
+                .attr("fill","white")
+                .attr("font-size","24.4px")
+                .attr("font-family","Open Sans");
+
             const chartWidth = d3.select("#svgCanvas2").node().getBoundingClientRect().width - margin.left - margin.right;
             const chartHeight = svgHeight - margin.top - margin.bottom;
             const chart = svg

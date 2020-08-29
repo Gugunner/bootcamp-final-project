@@ -8,7 +8,7 @@ export const BootcampAppContext = createContext(undefined);
 
 const BootcampFinalProjectContextProvider = (props) => {
     const [startupDir, setStartupDir] = useState(() => []);
-
+    const [selCountry,setSelCountry] = useState(() => "");
     const filterStartupsLATAM = (feature, layer) => {
         const { name } = feature.properties;
         const startupsFound = startupDir.startups.filter(stp => stp.hq === name );
@@ -16,17 +16,6 @@ const BootcampFinalProjectContextProvider = (props) => {
         const popupOptions = {
            autoPan: false
         };
-        // ceo: "Luis Caviglia, Juan Ignacio Caviglia"
-        // desc: "Saas platform focused on high-end restaurant management."
-        // foundedDate: "2016"
-        // hq: "Uruguay"
-        // id: "5f497a74dafc926de6b32f75"
-        // investors: "Andreessen Horowitz"
-        // label: "None"
-        // market: "Uruguay, United States"
-        // name: "MEITRE"
-        // sector: "SaaS"
-        // stage: "Seed/Incubator"
         if(startupsFound.length > 0) {
             let startupContent = "";
             for(let i = 0; i < startupsFound.length; i++) {
@@ -55,14 +44,27 @@ const BootcampFinalProjectContextProvider = (props) => {
                                     </tbody>
                                 </table>
                             </div>`
+            layer.on("mouseover",  () =>
+                layer.setStyle({
+                    "fillColor": "rgb(72,137,247)",
+                    "fillOpacity": 0.6
+                })
+            );
+            layer.on("mouseout", () =>
+                layer.setStyle({
+                    "fillColor": "rgba(72,137,247,0.6)",
+                    "fillOpacity": 0.2
+                })
+            );
+            layer.on("click", () => {
+                setSelCountry(name);
+            });
             layer.bindPopup(startupContent,popupOptions);
         }
     };
-
     const addStartupInfoToCountry = (feature, layer) => {
         filterStartupsLATAM(feature, layer);
     };
-
     const getStartupDirs = async() => {
         const dir = await getAllStartups();
         if(dir) {
@@ -75,7 +77,8 @@ const BootcampFinalProjectContextProvider = (props) => {
             world,
             addStartupInfoToCountry,
             startupDir,
-            getStartupDirs
+            getStartupDirs,
+            selCountry
         }}>
             {props.children}
         </BootcampAppContext.Provider>

@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import d3Tip from "d3-tip";
 import {BootcampAppContext} from "../../Shared/AppSession/app-context";
 const BootcampFinalProjectStartupTypePieChart = () => {
-  const { startupDir } = useContext(BootcampAppContext);
+  const { startupDir, selCountry } = useContext(BootcampAppContext);
   const [data, setData] = useState(() => []);
   const [isMounted, setIsMounted] = useState(() => false);
   const pieRef = useRef();
@@ -17,7 +17,12 @@ const BootcampFinalProjectStartupTypePieChart = () => {
   useEffect(() => {
     if(startupDir.startups) {
       const { startups } = startupDir;
-      const startupSectors =  startups.map(stp => stp.sector);
+      let startupSectors = [];
+      if(selCountry !== "") {
+        startupSectors = startups.filter(stp => stp.hq === selCountry).map(stp => stp.sector);
+      } else {
+        startupSectors =  startups.map(stp => stp.sector);
+      }
       const startupSectorsCount = startupSectors.reduce((acc,currentVal,idx) => {
         if(typeof acc !== "string" && Array.isArray(acc)) {
           const foundIndex = acc.findIndex(obj => {
@@ -39,7 +44,7 @@ const BootcampFinalProjectStartupTypePieChart = () => {
       })
       setData(startupSectorsCount);
     }
-  },[startupDir]);
+  },[startupDir, selCountry]);
 
   const formatPercent = d3.format(".2%");
 
@@ -87,11 +92,35 @@ const BootcampFinalProjectStartupTypePieChart = () => {
       const svg = d3
           .select(pieRef.current)
           .append("svg")
+          .attr("id","svgCanvas")
           .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`);
+
+      const title = svg
+          .append("text")
+          .text( (selCountry !== "" ? selCountry : "Latam")+" Startups By Sectors")
+          .attr("transform", 'translate(50,100)')
+          .attr("fill","white")
+          .attr("font-size","45px")
+          .attr("font-family","Open Sans");
 
       const pie = svg
           .append("g")
           .attr("transform", `translate(${chartWidth / 2},${chartHeight/2 + margin.top})`);
+
+      if(selCountry !== "") {
+        const button = svg
+            .append("g")
+            .attr("transform",`translate(${margin.left},${chartHeight})`)
+            .append("rect")
+            .attr("width","200px")
+            .attr("height","100px")
+            .attr("fill","transparent")
+            .attr("stroke","rgb(72,137,247)")
+            .style("padding","30px")
+            .append("text")
+            .attr("fill","white")
+            .text("Clear");
+      }
 
       const arcPie = d3
           .arc()
@@ -112,7 +141,7 @@ const BootcampFinalProjectStartupTypePieChart = () => {
           .style("height","80px")
           .style("text-align","center")
           .style("border","1px solid rgba(72,137,247,0.6)")
-          .offset([50,50])
+          .offset([0,0])
           .html(d => `
                     <div>
                         <h4 style="margin: 4px">Sector</h4>
@@ -133,7 +162,6 @@ const BootcampFinalProjectStartupTypePieChart = () => {
           .style("cursor","pointer")
           .on("mouseover", tooltip.show)
           .on("mouseout", tooltip.hide);
-
 
       pie
           .selectAll("path")
@@ -156,7 +184,7 @@ const BootcampFinalProjectStartupTypePieChart = () => {
             text
                 .append("tspan")
                 .attr("font-size", "24")
-                .text(data.value.toLocaleString("en") > 1 ? data.data.name : "");
+                .text(data.value.toLocaleString("en") > 2 || selCountry !== "" ? data.data.name : "");
 
             text
                 .append("tspan")
@@ -164,14 +192,14 @@ const BootcampFinalProjectStartupTypePieChart = () => {
                 .attr("font-size", "20")
                 .attr("font-weight",700)
                 .attr("dy", "1.3em")
-                .text(data.value.toLocaleString("en") > 5 ? `${data.value.toLocaleString("en")} (${formatPercent(data.data.count/total)})` : "");
+                .text(data.value.toLocaleString("en") > 5 || selCountry !== "" ? `${data.value.toLocaleString("en")} (${formatPercent(data.data.count/total)})` : "");
             pie.call(tooltip);
           });
     }
   },[data])
 
   return (
-      <div id="startup-types-chart" style={{position: "relative", height: "100%", backgroundColor: "rgb(36,36,36)"}} ref={pieRef} />
+      <div id="startup-types-chart" style={{position: "relative", height: "100%", backgroundColor: "rgb(36,36,36)", borderBottom: "3px solid rgb(72,137,247)"}} ref={pieRef} />
   )
 };
 
