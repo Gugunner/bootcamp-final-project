@@ -7,7 +7,7 @@ const styles = makeStyles((theme) => ({
         color: "rgb(72,137,247)",
     }
 }));
-const NonLinearSlider = ({sliderYear, handleSliderYear}) => {
+const NonLinearSlider = ({sliderYear, handleSliderYear, minValue, maxValue}) => {
     const classes = styles();
     const handleChange = (event, newValue) => {
         handleSliderYear(newValue);
@@ -18,15 +18,15 @@ const NonLinearSlider = ({sliderYear, handleSliderYear}) => {
     },[sliderYear]);
 
     return (
-        <div>
+        <div style={{width: "100%"}}>
             <Typography id="non-linear-slider" gutterBottom style={{color: "white", fontFamily: "Open Sans"}}>
                 Year
             </Typography>
             <Slider
                 value={sliderYear}
-                min={1998}
+                min={minValue}
                 step={0.1}
-                max={2020}
+                max={maxValue}
                 scale={(x) => x}
                 onChange={handleChange}
                 valueLabelDisplay="auto"

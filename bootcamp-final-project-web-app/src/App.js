@@ -4,7 +4,6 @@ import './App.css';
 import BootcampFinalProjectMenuDrawer from "./Shared/Menu/menu";
 import BootcampFinalProjectStartupDashboard from "./Components/StartupDahsboard/startup-dashboard";
 import BootcampFinalProjectHome from "./Components/Home/home";
-import {BootcampAppContext} from "./Shared/AppSession/app-context";
 import Grid from "@material-ui/core/Grid";
 function App() {
   return (
