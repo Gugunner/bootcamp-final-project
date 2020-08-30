@@ -1,15 +1,14 @@
 import React, {useState} from 'react';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
+import { Link } from "react-router-dom";
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import HomeIcon from '@material-ui/icons/Home';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import ButtonAppBar from "./appbar";
 
 const useStyles = makeStyles({
@@ -20,6 +19,10 @@ const useStyles = makeStyles({
         width: 'auto',
     },
 });
+const items = [
+    { id: "HOME", icon: <HomeIcon />, select: false, path:"/home" },
+    { id: "STARTUPS LATAM", icon: <DashboardIcon />, select: false, path:"/startup-dashboard" }
+]
 const BootcampFinalProjectMenuDrawer = () => {
     const classes = useStyles();
     const [open, setOpen] = useState(() => false);
@@ -34,20 +37,24 @@ const BootcampFinalProjectMenuDrawer = () => {
             onKeyDown={toggleDrawer(false)}
         >
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
+                {items.slice(0,1).map((listItem, index) => (
+                    <Link key={listItem.id} to={listItem.path} style={{textDecoration: 'none', color: 'inherit'}}>
+                        <ListItem button >
+                            <ListItemIcon>{listItem.icon}</ListItemIcon>
+                            <ListItemText primary={listItem.id} />
+                        </ListItem>
+                    </Link>
                 ))}
             </List>
             <Divider />
             <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
+                {items.slice(1).map((listItem, index) => (
+                    <Link key={listItem.id} to={listItem.path} style={{textDecoration: 'none', color: 'inherit'}}>
+                        <ListItem button >
+                            <ListItemIcon>{listItem.icon}</ListItemIcon>
+                            <ListItemText primary={listItem.id} />
+                        </ListItem>
+                    </Link>
                 ))}
             </List>
         </div>

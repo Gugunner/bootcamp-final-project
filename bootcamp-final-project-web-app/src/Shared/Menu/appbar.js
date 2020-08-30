@@ -34,11 +34,9 @@ const ButtonAppBar = ({toggleDrawer}) => {
         <div className={classes.root} style={{backgroundColor: "orange"}}>
             <AppBar position="static" className={classes.colorPrimary}>
                 <Toolbar>
-                    <Button onClick={() => handleDrawer(true)}>
-                    <IconButton  edge="start" className={`${classes.menuButton} ${classes.colorInherit}`} color="inherit" aria-label="menu">
+                    <IconButton onClick={() => handleDrawer(true)}  edge="start" className={`${classes.menuButton} ${classes.colorInherit}`} color="inherit" aria-label="menu">
                         <MenuIcon />
                     </IconButton>
-                    </Button>
                     <Typography variant="h6" className={classes.title}>
                         Bootcamp Final Project
                     </Typography>

@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import d3Tip from "d3-tip";
 import {BootcampAppContext} from "../../Shared/AppSession/app-context";
 const BootcampFinalProjectStartupTypePieChart = () => {
-  const { startupDir, selCountry } = useContext(BootcampAppContext);
+  const { startupDir, selCountry, setSelCountry } = useContext(BootcampAppContext);
   const [data, setData] = useState(() => []);
   const [isMounted, setIsMounted] = useState(() => false);
   const pieRef = useRef();
@@ -41,8 +41,16 @@ const BootcampFinalProjectStartupTypePieChart = () => {
           return [{ name: acc, count: 1 }, {name: currentVal, count: 1}];
         }
 
-      })
-      setData(startupSectorsCount);
+      });
+      console.log("Startup Sectors Count", startupSectorsCount);
+      if(typeof startupSectorsCount === "string") {
+        setData([{
+          name: startupSectorsCount,
+          count: 1
+        }]);
+      } else {
+        setData(startupSectorsCount);
+      }
     }
   },[startupDir, selCountry]);
 
@@ -55,46 +63,51 @@ const BootcampFinalProjectStartupTypePieChart = () => {
     if(isMounted && data.length > 0) {
 
       let currentAngle = 0;
-      const minimumStepAngle =
-          (Math.PI * 2) / data.map(f => f.count).reduce((acc, val) => acc + val);
-      const dataset = data.map((d, idx) => {
-        const newAngle = d.count * minimumStepAngle;
-        const set = {
-          data: {
-            name: d.name,
-            count: d.count
-          },
-          index: idx,
-          value: d.count,
-          startAngle: currentAngle,
-          endAngle: newAngle + currentAngle,
-          padAngle: 0
-        };
-        currentAngle += newAngle;
-        return set;
-      });
+      console.log("Data", data)
+      if(data && data.length > 0) {
+        const minimumStepAngle =
+            (Math.PI * 2) / data.map(f => f.count).reduce((acc, val) => acc + val);
+        const dataset = data.map((d, idx) => {
+          const newAngle = d.count * minimumStepAngle;
+          const set = {
+            data: {
+              name: d.name,
+              count: d.count
+            },
+            index: idx,
+            value: d.count,
+            startAngle: currentAngle,
+            endAngle: newAngle + currentAngle,
+            padAngle: 0
+          };
+          currentAngle += newAngle;
+          return set;
+        });
+      }
 
 //dataset equal to pieArcData
       const pieArcData = d3.pie().value(d => d.count)(data);
       const svgHeight = 800;
       const svgWidth = pieRef.current.clientWidth*1.8;
-      const total = data.reduce((acc,val,idx) => idx === 1 ? acc.count+val.count : acc+val.count);
+      let total = 0;
+      if(data.length > 1) {
+        total = data.reduce((acc,val,idx) => idx === 1 ? acc.count+val.count : acc+val.count);
+      } else {
+        total = 1;
+      }
       const margin = {
         top: 50,
         bottom: 30,
         left: 30,
         right: 30
       };
-
       const chartWidth = svgWidth - margin.left - margin.right;
       const chartHeight = svgHeight - margin.top - margin.bottom;
-
       const svg = d3
           .select(pieRef.current)
           .append("svg")
           .attr("id","svgCanvas")
           .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`);
-
       const title = svg
           .append("text")
           .text( (selCountry !== "" ? selCountry : "Latam")+" Startups By Sectors")
@@ -102,26 +115,35 @@ const BootcampFinalProjectStartupTypePieChart = () => {
           .attr("fill","white")
           .attr("font-size","45px")
           .attr("font-family","Open Sans");
-
       const pie = svg
           .append("g")
           .attr("transform", `translate(${chartWidth / 2},${chartHeight/2 + margin.top})`);
-
       if(selCountry !== "") {
-        const button = svg
+        const buttonG = svg
             .append("g")
-            .attr("transform",`translate(${margin.left},${chartHeight})`)
+            .attr("transform",`translate(${margin.left},${chartHeight-margin.bottom})`)
+            .style("cursor","pointer");
+        buttonG
             .append("rect")
-            .attr("width","200px")
-            .attr("height","100px")
+            .attr("width","180px")
+            .attr("height","50px")
             .attr("fill","transparent")
             .attr("stroke","rgb(72,137,247)")
-            .style("padding","30px")
+            .style("padding","16px");
+        buttonG
             .append("text")
+            .attr("font-size","30px")
+            .attr("font-family","Open Sand")
+            .attr("x",50)
+            .attr("y",35)
             .attr("fill","white")
             .text("Clear");
-      }
 
+        buttonG
+            .on("click",() => {
+              setSelCountry("");
+            });
+      }
       const arcPie = d3
           .arc()
           .innerRadius(110)
@@ -129,7 +151,6 @@ const BootcampFinalProjectStartupTypePieChart = () => {
           .padRadius(300)
           .padAngle(4 / 300)
           .cornerRadius(8);
-
       const tooltip = d3Tip()
           .attr("class","tooltip")
           .style("background-color","rgb(36,36,36)")
@@ -148,7 +169,6 @@ const BootcampFinalProjectStartupTypePieChart = () => {
                         <h5 style="margin: 4px">${d.data.name}</h5>
                         <p style="font-family: 'Open Sans'; text-align: center ; margin: 8px">${formatPercent(d.data.count/total)}</p>
                     </div>`);
-
       pie
           .selectAll("path")
           .data(pieArcData)
@@ -162,7 +182,6 @@ const BootcampFinalProjectStartupTypePieChart = () => {
           .style("cursor","pointer")
           .on("mouseover", tooltip.show)
           .on("mouseout", tooltip.hide);
-
       pie
           .selectAll("path")
           .data(pieArcData)
@@ -180,12 +199,10 @@ const BootcampFinalProjectStartupTypePieChart = () => {
                   _d[1] *= 1.5;
                   return "translate(" + _d + ")";
                 });
-
             text
                 .append("tspan")
                 .attr("font-size", "24")
                 .text(data.value.toLocaleString("en") > 2 || selCountry !== "" ? data.data.name : "");
-
             text
                 .append("tspan")
                 .attr("x", "0")

@@ -12,7 +12,6 @@ const BootcampFinalProjectContextProvider = (props) => {
     const filterStartupsLATAM = (feature, layer) => {
         const { name } = feature.properties;
         const startupsFound = startupDir.startups.filter(stp => stp.hq === name );
-        console.log("Startups Found",startupsFound);
         const popupOptions = {
            autoPan: false
         };
@@ -44,12 +43,13 @@ const BootcampFinalProjectContextProvider = (props) => {
                                     </tbody>
                                 </table>
                             </div>`
-            layer.on("mouseover",  () =>
+            layer.on("mouseover",  () => {
+                console.log("Layer", layer);
                 layer.setStyle({
                     "fillColor": "rgb(72,137,247)",
                     "fillOpacity": 0.6
                 })
-            );
+            });
             layer.on("mouseout", () =>
                 layer.setStyle({
                     "fillColor": "rgba(72,137,247,0.6)",
@@ -68,6 +68,7 @@ const BootcampFinalProjectContextProvider = (props) => {
     const getStartupDirs = async() => {
         const dir = await getAllStartups();
         if(dir) {
+            console.log("Startups Dir", dir.startups);
             setStartupDir(dir);
         }
     };
@@ -78,7 +79,8 @@ const BootcampFinalProjectContextProvider = (props) => {
             addStartupInfoToCountry,
             startupDir,
             getStartupDirs,
-            selCountry
+            selCountry,
+            setSelCountry
         }}>
             {props.children}
         </BootcampAppContext.Provider>
