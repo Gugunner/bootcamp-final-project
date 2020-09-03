@@ -10,3 +10,11 @@ export const getAllStartups = () => {
     });
 };
 
+export const getMLModel = () => {
+    return axios.get(`${API_DEV_URL}ml_value`).then(jsonResponse => {
+        return jsonResponse ? jsonResponse.data : false;
+    }).catch(e => {
+        alert("No ML Value found")
+        return false;
+    });
+};

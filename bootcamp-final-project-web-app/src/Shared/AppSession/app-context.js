@@ -1,13 +1,14 @@
 import React, {createContext, useState} from "react";
 import ReactDOMServer from 'react-dom/server';
 import world from "../../Data/custom_world.geo.json";
-import { getAllStartups } from "../../Utils/services";
+import { getAllStartups, getMLModel } from "../../Utils/services";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 export const BootcampAppContext = createContext(undefined);
 
 const BootcampFinalProjectContextProvider = (props) => {
     const [startupDir, setStartupDir] = useState(() => []);
+    const [mlData, setMLData] = useState(() => []);
     const [selCountry,setSelCountry] = useState(() => "");
     const filterStartupsLATAM = (feature, layer) => {
         const { name } = feature.properties;
@@ -72,6 +73,13 @@ const BootcampFinalProjectContextProvider = (props) => {
             setStartupDir(dir);
         }
     };
+    // const getML = async() => {
+    //     const data = await getMLModel();
+    //     if(data) {
+    //         console.log("Data ML", ml);
+    //
+    //     }
+    // }
 
     return (
         <BootcampAppContext.Provider value={{
