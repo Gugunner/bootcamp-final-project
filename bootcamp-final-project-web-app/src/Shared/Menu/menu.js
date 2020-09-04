@@ -5,8 +5,9 @@ import { Link } from "react-router-dom";
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import HomeIcon from '@material-ui/icons/Home';
+import TimelineIcon from '@material-ui/icons/Timeline';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import TableChartIcon from '@material-ui/icons/TableChart';
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from '@material-ui/core/ListItemText';
 import ButtonAppBar from "./appbar";
@@ -20,7 +21,8 @@ const useStyles = makeStyles({
     },
 });
 const items = [
-    { id: "HOME", icon: <HomeIcon />, select: false, path:"/home" },
+    { id: "TECH HISTORY", icon: <TimelineIcon />, select: false, path:"/tech-history" },
+    { id: "ML TABLE", icon: <TableChartIcon /> , select: false, path: "ml-table" },
     { id: "STARTUPS LATAM", icon: <DashboardIcon />, select: false, path:"/startup-dashboard" }
 ]
 const BootcampFinalProjectMenuDrawer = () => {

@@ -3,7 +3,8 @@ import { Redirect, Switch, Route } from 'react-router-dom';
 import './App.css';
 import BootcampFinalProjectMenuDrawer from "./Shared/Menu/menu";
 import BootcampFinalProjectStartupDashboard from "./Components/StartupDahsboard/startup-dashboard";
-import BootcampFinalProjectHome from "./Components/Home/home";
+import BootcampFinalProjectTechHistory from "./Components/TechHistory/tech-history";
+import BootcampFinalProjectMLTableContainer from "./Components/MLTable/ml-table-container";
 import Grid from "@material-ui/core/Grid";
 function App() {
   return (
@@ -13,12 +14,15 @@ function App() {
                 <BootcampFinalProjectMenuDrawer />
             </Grid>
             <Switch>
-                <Redirect exact from="/" to="/home" />
+                <Redirect exact from="/" to="/ml-table" />
+                <Route path="/tech-history" exact>
+                    <BootcampFinalProjectTechHistory />
+                </Route>
                 <Route path="/startup-dashboard" exact>
                     <BootcampFinalProjectStartupDashboard />
                 </Route>
-                <Route path="/home">
-                    <BootcampFinalProjectHome />
+                <Route path="/ml-table" exact>
+                    <BootcampFinalProjectMLTableContainer />
                 </Route>
             </Switch>
         </Grid>

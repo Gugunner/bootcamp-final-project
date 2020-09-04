@@ -26,9 +26,9 @@ def createNewYearCorrelation(last_year_auto_correlation):
     print(f"Last Year Correlation {last_year_auto_correlation}")
     loaded_model = pickle.load(open(path,"rb"))
     new_t_minus_1 = last_year_auto_correlation["value"]
-    new_t_diff = last_year_auto_correlation["value"] - last_year_auto_correlation["t-1"]
-    new_t_minus_2 = last_year_auto_correlation["t-1"]
-    new_t_diff_2 = last_year_auto_correlation["t-1"] - last_year_auto_correlation["t-2"]
+    new_t_diff = int(last_year_auto_correlation["value"]) - int(last_year_auto_correlation["t-1"])
+    new_t_minus_2 = int(last_year_auto_correlation["t-1"])
+    new_t_diff_2 = int(last_year_auto_correlation["t-1"]) - int(last_year_auto_correlation["t-2"])
     new_year_df = pd.DataFrame({
         "year": int(last_year_auto_correlation["year"])+1,
         "t-1": new_t_minus_1,

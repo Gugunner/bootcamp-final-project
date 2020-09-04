@@ -1,7 +1,7 @@
 import React, {createContext, useState} from "react";
 import ReactDOMServer from 'react-dom/server';
 import world from "../../Data/custom_world.geo.json";
-import { getAllStartups, getMLModel } from "../../Utils/services";
+import { getAllStartups, getLastYearCorrelation, predictNewYearCorrelation } from "../../Utils/services";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 export const BootcampAppContext = createContext(undefined);
@@ -73,26 +73,34 @@ const BootcampFinalProjectContextProvider = (props) => {
             setStartupDir(dir);
         }
     };
-    // const getML = async() => {
-    //     const data = await getMLModel();
-    //     if(data) {
-    //         console.log("Data ML", ml);
-    //
-    //     }
-    // }
-
+    const getLastYear = async() => {
+        const data = await getLastYearCorrelation();
+        if(data) {
+            console.log("Data ML", data);
+            setMLData([data]);
+        }
+    };
+    const predictNewYear = async(lastYearCorrelation) => {
+        const data = await predictNewYearCorrelation(lastYearCorrelation);
+        if(data) {
+            setMLData([...mlData,data]);
+        }
+    }
     return (
         <BootcampAppContext.Provider value={{
             world,
             addStartupInfoToCountry,
             startupDir,
             getStartupDirs,
+            getLastYear,
+            predictNewYear,
+            mlData,
             selCountry,
             setSelCountry
         }}>
             {props.children}
         </BootcampAppContext.Provider>
-    )
+    );
 };
 
 export default BootcampFinalProjectContextProvider;

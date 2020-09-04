@@ -10,8 +10,19 @@ export const getAllStartups = () => {
     });
 };
 
-export const getMLModel = () => {
-    return axios.get(`${API_DEV_URL}ml_value`).then(jsonResponse => {
+export const getLastYearCorrelation = () => {
+    return axios.get(`${API_DEV_URL}last-year`).then(jsonResponse => {
+        return jsonResponse ? jsonResponse.data : false;
+    }).catch(e => {
+        alert("No ML Value found")
+        return false;
+    });
+};
+
+export const predictNewYearCorrelation = (lastYearCorrelation) => {
+    return axios.post(`${API_DEV_URL}ml-value`, {
+        ...lastYearCorrelation
+    }).then(jsonResponse => {
         return jsonResponse ? jsonResponse.data : false;
     }).catch(e => {
         alert("No ML Value found")
