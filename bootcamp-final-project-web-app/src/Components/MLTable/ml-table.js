@@ -46,6 +46,7 @@ const BootcampFinalProjectMLTable = ({mlData}) => {
     const [rows, setRows] = useState(() => []);
     const classes = useStyles();
     useEffect(() => {
+        console.log("ML DATA TABLE", mlData);
         if(mlData.length > 0) {
             setRows(() => mlData.map(mlD => createData(mlD)));
         }
@@ -65,8 +66,9 @@ const BootcampFinalProjectMLTable = ({mlData}) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
-                        <TableRow key={row.year}>
+                    {rows.map((row) => {
+                        console.log("Row", row)
+                        return <TableRow key={row.year}>
                             <TableCell component="th" scope="row" className={classes.bodyHeader}>
                                 {row["year"]}
                             </TableCell>
@@ -76,7 +78,7 @@ const BootcampFinalProjectMLTable = ({mlData}) => {
                             <TableCell align="left" className={classes.bodyCell}>{row["t-2"].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</TableCell>
                             <TableCell align="left" className={classes.bodyCell}>{row["t-2_Diff"].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</TableCell>
                         </TableRow>
-                    ))}
+                    })}
                 </TableBody>
             </Table>
         </TableContainer>

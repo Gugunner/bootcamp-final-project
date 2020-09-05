@@ -82,10 +82,7 @@ const BootcampFinalProjectContextProvider = (props) => {
         const data = await getLastYearCorrelation();
         if(data) {
             console.log("Data ML", data);
-            setMLData(() => ({
-                ...mlData,
-                "microprocessor": [data]
-            }));
+            setMLData(data);
         }
     };
     const predictNewYear = async(lastYearCorrelation) => {

@@ -29,9 +29,12 @@ def createNewYearCorrelation(json_request):
     print(f"Last Year Correlation {json_request}")
     path = {
         "microprocessor": os.path.join(".","services","pulses.sav"),
-        "flip-flops": os.path.join(".","services","flops.sav")
+        "flip-flops": os.path.join(".","services","flops.sav"),
+        "transistors": os.path.join(".","services","transistor.sav")
     }
-    loaded_model = pickle.load(open(path[json_request.term],"rb"))
+    print("json request",json_request)
+    print("Path",path[json_request["term"]]);
+    loaded_model = pickle.load(open(path[json_request["term"]],"rb"))
     new_t_minus_1 = json_request["value"]
     new_t_diff = int(json_request["value"]) - int(json_request["t-1"])
     new_t_minus_2 = int(json_request["t-1"])
@@ -47,10 +50,10 @@ def createNewYearCorrelation(json_request):
     new_year_index = new_year_df.index[0]
     return {
         "year":int(new_year_index),
-        "value": int(new_pulses)+int(new_t_minus_2),
+        "value": int(new_pulses)+int(new_t_minus_2/2),
         "t-1": new_t_minus_1,
         "t-1_Diff": new_t_diff,
         "t-2": new_t_minus_2,
         "t-2_Diff": new_t_diff_2,
-        "term": json_request.term
+        "term": json_request["term"]
     }
