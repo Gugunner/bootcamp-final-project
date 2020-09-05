@@ -47,7 +47,7 @@ const BootcampFinalProjectTechHistory = () => {
         setSliderYearCountries(1996);
     };
     return (
-        <Grid item container spacing={2} style={{height: "100%", width: "100%", padding: "16px 32px", textAlign: "left"}}>
+        <Grid item container spacing={2} style={{width: "100%", padding: "32px 32px", textAlign: "left"}}>
             <Grid item xs={6}>
                 <Typography variant="h5" style={{color: "white", fontFamily: "Open Sans"}}>Most Valuable Companies By Market Cap from 2005-2020</Typography>
                 <Typography variant="h6" style={{color: "white", fontFamily: "Open Sans", marginBottom: "16px"}}>Market Capitalization, $mm - Source: Bloomberg</Typography>
@@ -77,7 +77,7 @@ const BootcampFinalProjectTechHistory = () => {
                         </Button>
                     ): ""
                 }
-                <div style={{height: "100%", width: "100%"}}>
+                <div style={{height: "800px", width: "100%"}}>
                     <BootCampFinalProjectAnimatedBarChartCompanies
                         play={playCompanies}
                         currentYear={currentYearCompanies}
@@ -115,7 +115,7 @@ const BootcampFinalProjectTechHistory = () => {
                         </Button>
                     ): ""
                 }
-                <div style={{height: "100%", width: "100%"}}>
+                <div style={{height: "800px", width: "100%"}}>
                     <BootCampFinalProjectAnimatedBarChartCountries
                         play={playCountries}
                         currentYear={currentYearCountries}

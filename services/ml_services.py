@@ -3,34 +3,41 @@ import pandas as pd
 import sys
 import os
 sys.path.insert(1, "./ml_models")
-path = os.path.join(".","services","pulses.sav")
-def createLastYearCorrelation(last_year_registry):
+# pulses_path = os.path.join(".","services","pulses.sav")
+# flops_path = os.path.join(".","services","flops.sav")
+def createLastYearCorrelation(last_year_registry, value_term, term):
     last_four_years = {"years": []}
     for year in last_year_registry:
         last_four_years["years"].append({
             "year": year["Year"],
-            "value": year["Microprocessor clock speed (Hertz (pulses per second))"]
+            "value": year[value_term]
         })
 
+    print(f"Last Four Years {last_four_years}")
     last_year_auto_correlation = {
         "year": last_four_years["years"][0]["year"],
         "value": int(last_four_years["years"][0]["value"]),
         "t-1": int(last_four_years["years"][1]["value"]),
         "t-1_Diff": int(last_four_years["years"][1]["value"]) - int(last_four_years["years"][2]["value"]),
         "t-2": int(last_four_years["years"][2]["value"]),
-        "t-2_Diff": int(last_four_years["years"][2]["value"]) - int(last_four_years["years"][3]["value"])
+        "t-2_Diff": int(last_four_years["years"][2]["value"]) - int(last_four_years["years"][3]["value"]),
+        "term": term
     }
     return last_year_auto_correlation
 
-def createNewYearCorrelation(last_year_auto_correlation):
-    print(f"Last Year Correlation {last_year_auto_correlation}")
-    loaded_model = pickle.load(open(path,"rb"))
-    new_t_minus_1 = last_year_auto_correlation["value"]
-    new_t_diff = int(last_year_auto_correlation["value"]) - int(last_year_auto_correlation["t-1"])
-    new_t_minus_2 = int(last_year_auto_correlation["t-1"])
-    new_t_diff_2 = int(last_year_auto_correlation["t-1"]) - int(last_year_auto_correlation["t-2"])
+def createNewYearCorrelation(json_request):
+    print(f"Last Year Correlation {json_request}")
+    path = {
+        "microprocessor": os.path.join(".","services","pulses.sav"),
+        "flip-flops": os.path.join(".","services","flops.sav")
+    }
+    loaded_model = pickle.load(open(path[json_request.term],"rb"))
+    new_t_minus_1 = json_request["value"]
+    new_t_diff = int(json_request["value"]) - int(json_request["t-1"])
+    new_t_minus_2 = int(json_request["t-1"])
+    new_t_diff_2 = int(json_request["t-1"]) - int(json_request["t-2"])
     new_year_df = pd.DataFrame({
-        "year": int(last_year_auto_correlation["year"])+1,
+        "year": int(json_request["year"])+1,
         "t-1": new_t_minus_1,
         "t-1_Diff": new_t_diff,
         "t-2": new_t_minus_2,
@@ -40,9 +47,10 @@ def createNewYearCorrelation(last_year_auto_correlation):
     new_year_index = new_year_df.index[0]
     return {
         "year":int(new_year_index),
-        "value": int(new_pulses),
+        "value": int(new_pulses)+int(new_t_minus_2),
         "t-1": new_t_minus_1,
         "t-1_Diff": new_t_diff,
         "t-2": new_t_minus_2,
-        "t-2_Diff": new_t_diff_2
+        "t-2_Diff": new_t_diff_2,
+        "term": json_request.term
     }

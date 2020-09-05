@@ -8,8 +8,8 @@ import BootcampFinalProjectMLTableContainer from "./Components/MLTable/ml-table-
 import Grid from "@material-ui/core/Grid";
 function App() {
   return (
-    <div className="App" style={{backgroundColor: "rgb(36, 36, 36)", height: "100vh"}}>
-        <Grid container spacing={0} style={{height: "100%"}}>
+    <div className="App">
+        <Grid container spacing={0}>
             <Grid item xs={12}>
                 <BootcampFinalProjectMenuDrawer />
             </Grid>

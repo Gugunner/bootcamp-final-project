@@ -8,7 +8,12 @@ export const BootcampAppContext = createContext(undefined);
 
 const BootcampFinalProjectContextProvider = (props) => {
     const [startupDir, setStartupDir] = useState(() => []);
-    const [mlData, setMLData] = useState(() => []);
+    const [mlData, setMLData] = useState(() => ({
+        "microprocessor": {},
+        "flip-flops": {},
+        "transistors": {}
+
+    }));
     const [selCountry,setSelCountry] = useState(() => "");
     const filterStartupsLATAM = (feature, layer) => {
         const { name } = feature.properties;
@@ -73,17 +78,23 @@ const BootcampFinalProjectContextProvider = (props) => {
             setStartupDir(dir);
         }
     };
-    const getLastYear = async() => {
+    const getLastYears = async() => {
         const data = await getLastYearCorrelation();
         if(data) {
             console.log("Data ML", data);
-            setMLData([data]);
+            setMLData(() => ({
+                ...mlData,
+                "microprocessor": [data]
+            }));
         }
     };
     const predictNewYear = async(lastYearCorrelation) => {
         const data = await predictNewYearCorrelation(lastYearCorrelation);
         if(data) {
-            setMLData([...mlData,data]);
+            setMLData(() => ({
+                ...mlData,
+                [data["term"]]: [...mlData[data["term"]], data]
+            }));
         }
     }
     return (
@@ -92,7 +103,7 @@ const BootcampFinalProjectContextProvider = (props) => {
             addStartupInfoToCountry,
             startupDir,
             getStartupDirs,
-            getLastYear,
+            getLastYears,
             predictNewYear,
             mlData,
             selCountry,

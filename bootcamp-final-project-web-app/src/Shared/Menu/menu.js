@@ -21,8 +21,8 @@ const useStyles = makeStyles({
     },
 });
 const items = [
-    { id: "TECH HISTORY", icon: <TimelineIcon />, select: false, path:"/tech-history" },
     { id: "ML TABLE", icon: <TableChartIcon /> , select: false, path: "/ml-table" },
+    { id: "TECH HISTORY", icon: <TimelineIcon />, select: false, path:"/tech-history" },
     { id: "STARTUPS LATAM", icon: <DashboardIcon />, select: false, path:"/startup-dashboard" }
 ]
 const BootcampFinalProjectMenuDrawer = () => {
